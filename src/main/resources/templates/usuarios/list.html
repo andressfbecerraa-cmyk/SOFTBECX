@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Usuarios</title>
+</head>
+<body>
+
+<h1>Gestión de Usuarios</h1>
+
+<!-- Mensaje de éxito -->
+<div th:if="${success}">
+    <p th:text="${success}"></p>
+</div>
+
+<hr>
+
+<!-- Opciones -->
+<a th:href="@{/view/usuarios/form}">Registrar Usuario</a>
+
+<hr>
+
+<h2>Lista de Usuarios Registrados</h2>
+
+<table border="1" cellpadding="5" cellspacing="0">
+
+    <thead>
+    <tr>
+        <th>Acciones</th>
+        <th>ID Usuario</th>
+        <th>Documento</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Correo</th>
+        <th>Telefono</th>
+        <th>Rol</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    <!-- Recorrer la lista de usuarios -->
+    <tr th:each="usuario : ${usuarios}">
+
+        <td>
+
+            <!-- Editar -->
+            <a th:href="@{'/view/usuarios/update/' + ${usuario.id_usuario}}">
+                Editar
+            </a>
+
+            <!-- Eliminar -->
+            <form th:action="@{'/view/usuarios/delete/' + ${usuario.id_usuario}}"
+                  method="post">
+
+                <button type="submit">
+                    Eliminar
+                </button>
+
+            </form>
+
+        </td>
+
+        <td th:text="${usuario.id_usuario}"></td>
+
+        <td th:text="${usuario.documento}"></td>
+
+        <td th:text="${usuario.nombre}"></td>
+
+        <td th:text="${usuario.apellido}"></td>
+
+        <td th:text="${usuario.correo}"></td>
+
+        <td th:text="${usuario.telefono}"></td>
+
+        <td th:text="${usuario.rol}"></td>
+
+    </tr>
+
+    <!-- Si no existen usuarios -->
+    <tr th:if="${#lists.isEmpty(usuarios)}">
+
+        <td colspan="9">
+            No hay usuarios registrados.
+        </td>
+
+    </tr>
+
+    </tbody>
+
+</table>
+
+</body>
+</html>
